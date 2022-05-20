@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        Board b = new Board(1);
+        Board b = new Board(2);
         b.generateBombs();
         b.generateNumber(0, 0);
         String[][] board = b.getBoard();
@@ -10,6 +10,6 @@ public class Main {
         {
             System.out.println(Arrays.toString(x));
         }
-
+        //UserInterface.setupGui();
     }
 }
