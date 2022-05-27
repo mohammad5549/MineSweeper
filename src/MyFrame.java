@@ -120,8 +120,18 @@ public class MyFrame extends JFrame implements ActionListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        int row = 0;
+        int col = 0;
+        for (int i = 0; i < buttons.length; i++){
+            for (int x = 0; x < buttons[i].length; x++){
+                if (e.getSource() == buttons[i][x]){
+                    row = i;
+                    col = x;
+                }
+            }
+        }
         if (e.getButton() == MouseEvent.BUTTON1){
-            int row = 0;
+            /*int row = 0;
             int col = 0;
             for (int i = 0; i < buttons.length; i++){
                 for (int x = 0; x < buttons[i].length; x++){
@@ -130,13 +140,29 @@ public class MyFrame extends JFrame implements ActionListener, MouseListener {
                         col = x;
                     }
                 }
+            }*/
+            if (board.getBoard()[row][col].equals("X"))
+            {
+                for (int i = 0; i < buttons.length; i++){
+                    for (int x = 0; x < buttons[i].length; x++){
+                        this.remove(buttons[i][x]);
+                    }
+                }
+                this.invalidate();
+                this.validate();
+                this.repaint();
             }
-            buttons[row][col].setBackground(Color.GRAY);
-            buttons[row][col].setText(board.getBoard()[row][col]);
-            buttons[row][col].setFocusable(false);
+            else if (board.getBoard()[row][col].equals("0")){
+                revealAlgorithm(row, col);
+            }
+            else{
+                buttons[row][col].setBackground(Color.GRAY);
+                buttons[row][col].setText(board.getBoard()[row][col]);
+                buttons[row][col].setFocusable(false);
+            }
         }
         else if (e.getButton() == MouseEvent.BUTTON3){
-            int row = 0;
+            /*int row = 0;
             int col = 0;
             for (int i = 0; i < buttons.length; i++){
                 for (int x = 0; x < buttons[i].length; x++){
@@ -145,7 +171,7 @@ public class MyFrame extends JFrame implements ActionListener, MouseListener {
                         col = x;
                     }
                 }
-            }
+            }*/
 
             buttons[row][col].setText("X");
             buttons[row][col].setForeground(Color.RED);
@@ -173,5 +199,264 @@ public class MyFrame extends JFrame implements ActionListener, MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
+
+    public void revealAlgorithm(int row, int col){
+        buttons[row][col].setBackground(Color.GRAY);
+        if (row == 0 && col == 0){
+            if (board.getBoard()[row][col + 1].equals("0")){
+                revealAlgorithm(row, col + 1);
+            }
+            else {
+                buttons[row][col + 1].setBackground(Color.GRAY);
+                buttons[row][col + 1].setText(board.getBoard()[row][col + 1]);
+            }
+            if (board.getBoard()[row + 1][col + 1].equals("0")){
+                revealAlgorithm(row + 1, col + 1);
+            }
+            else {
+                buttons[row + 1][col + 1].setBackground(Color.GRAY);
+                buttons[row + 1][col + 1].setText(board.getBoard()[row + 1][col + 1]);
+            }
+            if (board.getBoard()[row + 1][col].equals("0")) {
+                revealAlgorithm(row + 1, col);
+            }
+            else {
+                buttons[row + 1][col].setBackground(Color.GRAY);
+                buttons[row + 1][col].setText(board.getBoard()[row + 1][col]);
+            }
+        }
+        else if (row == 0 && col == board.getBoard()[0].length - 1){
+            if (board.getBoard()[row][col - 1].equals("0")){
+                revealAlgorithm(row, col - 1);
+            }
+            else {
+                buttons[row][col - 1].setBackground(Color.GRAY);
+                buttons[row][col - 1].setText(board.getBoard()[row][col - 1]);
+            }
+            if (board.getBoard()[row + 1][col - 1].equals("0")){
+                revealAlgorithm(row + 1, col - 1);
+            }
+            else {
+                buttons[row + 1][col - 1].setBackground(Color.GRAY);
+                buttons[row + 1][col - 1].setText(board.getBoard()[row + 1][col - 1]);
+            }
+            if (board.getBoard()[row + 1][col].equals("0")){
+                revealAlgorithm(row + 1, col);
+            }
+            else {
+                buttons[row + 1][col].setBackground(Color.GRAY);
+                buttons[row + 1][col].setText(board.getBoard()[row + 1][col]);
+            }
+        }
+        else if (row == board.getBoard().length - 1 && col == 0){
+            if (board.getBoard()[row - 1][col].equals("0")){
+                revealAlgorithm(row - 1, col);
+            }
+            else {
+                buttons[row - 1][col].setBackground(Color.GRAY);
+                buttons[row - 1][col].setText(board.getBoard()[row - 1][col]);
+            }
+            if (board.getBoard()[row - 1][col + 1].equals("0")){
+                revealAlgorithm(row - 1, col + 1);
+            }
+            else {
+                buttons[row - 1][col + 1].setBackground(Color.GRAY);
+                buttons[row - 1][col + 1].setText(board.getBoard()[row - 1][col + 1]);
+            }
+            if (board.getBoard()[row][col + 1].equals("0")){
+                revealAlgorithm(row, col + 1);
+            }
+            else {
+                buttons[row][col + 1].setBackground(Color.GRAY);
+                buttons[row][col + 1].setText(board.getBoard()[row][col + 1]);
+            }
+
+        }
+        else if (row == board.getBoard().length - 1 && col == board.getBoard()[0].length - 1){
+            if (board.getBoard()[row - 1][col].equals("0")){
+                revealAlgorithm(row - 1, col);
+            }
+            else {
+                buttons[row - 1][col].setBackground(Color.GRAY);
+                buttons[row - 1][col].setText(board.getBoard()[row - 1][col]);
+            }
+            if (board.getBoard()[row - 1][col - 1].equals("0")){
+                revealAlgorithm(row - 1, col - 1);
+            }
+            else {
+                buttons[row - 1][col - 1].setBackground(Color.GRAY);
+                buttons[row - 1][col - 1].setText(board.getBoard()[row - 1][col - 1]);
+            }
+            if (board.getBoard()[row][col - 1].equals("0")){
+                revealAlgorithm(row, col - 1);
+            }
+            else {
+                buttons[row][col - 1].setBackground(Color.GRAY);
+                buttons[row][col - 1].setText(board.getBoard()[row][col - 1]);
+            }
+        }
+        else if (row == 0){
+            if (board.getBoard()[row][col - 1].equals("0")){
+                revealAlgorithm(row, col - 1);
+            }
+            else {
+                buttons[row][col - 1].setBackground(Color.GRAY);
+                buttons[row][col - 1].setText(board.getBoard()[row][col - 1]);
+            }
+            if (board.getBoard()[row + 1][col - 1].equals("0")){
+                revealAlgorithm(row + 1, col - 1);
+            }
+            else {
+                buttons[row + 1][col - 1].setBackground(Color.GRAY);
+                buttons[row + 1][col - 1].setText(board.getBoard()[row + 1][col - 1]);
+            }
+            if (board.getBoard()[row + 1][col].equals("0")){
+                revealAlgorithm(row + 1, col);
+            }
+            else {
+                buttons[row + 1][col].setBackground(Color.GRAY);
+                buttons[row + 1][col].setText(board.getBoard()[row + 1][col]);
+            }
+            if (board.getBoard()[row + 1][col + 1].equals("0")){
+                revealAlgorithm(row + 1, col + 1);
+            }
+            else {
+                buttons[row + 1][col + 1].setBackground(Color.GRAY);
+                buttons[row + 1][col + 1].setText(board.getBoard()[row + 1][col + 1]);
+            }
+            if (board.getBoard()[row][col + 1].equals("0")){
+                revealAlgorithm(row, col + 1);
+            }
+            else {
+                buttons[row][col + 1].setBackground(Color.GRAY);
+                buttons[row][col + 1].setText(board.getBoard()[row][col + 1]);
+            }
+        }
+        else if (col == 0){
+            if (board.getBoard()[row - 1][col].equals("0")){
+                revealAlgorithm(row - 1, col);
+            }
+            else {
+                buttons[row - 1][col].setBackground(Color.GRAY);
+                buttons[row - 1][col].setText(board.getBoard()[row - 1][col]);
+            }
+            if (board.getBoard()[row - 1][col + 1].equals("0")){
+                revealAlgorithm(row - 1, col + 1);
+            }
+            else {
+                buttons[row - 1][col + 1].setBackground(Color.GRAY);
+                buttons[row - 1][col + 1].setText(board.getBoard()[row - 1][col + 1]);
+            }
+            if (board.getBoard()[row][col + 1].equals("0")){
+                revealAlgorithm(row, col + 1);
+            }
+            else {
+                buttons[row][col + 1].setBackground(Color.GRAY);
+                buttons[row][col + 1].setText(board.getBoard()[row][col + 1]);
+            }
+            if (board.getBoard()[row + 1][col + 1].equals("0")){
+                revealAlgorithm(row + 1, col + 1);
+            }
+            else {
+                buttons[row + 1][col + 1].setBackground(Color.GRAY);
+                buttons[row + 1][col + 1].setText(board.getBoard()[row + 1][col + 1]);
+            }
+            if (board.getBoard()[row + 1][col].equals("0")){
+                revealAlgorithm(row + 1, col);
+            }
+            else {
+                buttons[row + 1][col].setBackground(Color.GRAY);
+                buttons[row + 1][col].setText(board.getBoard()[row + 1][col]);
+            }
+        }
+        else if (row == board.getBoard().length - 1){
+            if (board.getBoard()[row][col - 1].equals("0")){
+                revealAlgorithm(row, col - 1);
+            }
+            else {
+                buttons[row][col - 1].setBackground(Color.GRAY);
+                buttons[row][col - 1].setText(board.getBoard()[row][col - 1]);
+            }
+            if (board.getBoard()[row - 1][col - 1].equals("0")){
+                revealAlgorithm(row - 1, col - 1);
+            }
+            else {
+                buttons[row - 1][col - 1].setBackground(Color.GRAY);
+                buttons[row - 1][col - 1].setText(board.getBoard()[row - 1][col - 1]);
+            }
+            if (board.getBoard()[row - 1][col].equals("0")){
+                revealAlgorithm(row - 1, col);
+            }
+            else {
+                buttons[row - 1][col].setBackground(Color.GRAY);
+                buttons[row - 1][col].setText(board.getBoard()[row - 1][col]);
+            }
+            if (board.getBoard()[row - 1][col + 1].equals("0")){
+                revealAlgorithm(row - 1, col + 1);
+            }
+            else {
+                buttons[row - 1][col + 1].setBackground(Color.GRAY);
+                buttons[row - 1][col + 1].setText(board.getBoard()[row - 1][col + 1]);
+            }
+            if (board.getBoard()[row][col + 1].equals("0")){
+                revealAlgorithm(row, col + 1);
+            }
+            else {
+                buttons[row][col + 1].setBackground(Color.GRAY);
+                buttons[row][col + 1].setText(board.getBoard()[row][col + 1]);
+            }
+            //------------------Left off here--------------------------//
+
+        }
+        /*
+        else if (col == board[0].length - 1){
+            if (board[row - 1][col].equals("X")){
+                perimeter++;
+            }
+            if (board[row - 1][col - 1].equals("X")){
+                perimeter++;
+            }
+            if (board[row][col - 1].equals("X")){
+                perimeter++;
+            }
+            if (board[row + 1][col - 1].equals("X")){
+                perimeter++;
+            }
+            if (board[row + 1][col].equals("X")){
+                perimeter++;
+            }
+            board[row][col] = "" + perimeter;
+            generateNumber(row + 1, 0);
+        }
+        else {
+            if (board[row - 1][col - 1].equals("X")){
+                perimeter++;
+            }
+            if (board[row - 1][col].equals("X")){
+                perimeter++;
+            }
+            if (board[row - 1][col + 1].equals("X")){
+                perimeter++;
+            }
+            if (board[row][col + 1].equals("X")){
+                perimeter++;
+            }
+            if (board[row + 1][col + 1].equals("X")){
+                perimeter++;
+            }
+            if (board[row + 1][col].equals("X")){
+                perimeter++;
+            }
+            if (board[row + 1][col - 1].equals("X")){
+                perimeter++;
+            }
+            if (board[row][col - 1].equals("X")){
+                perimeter++;
+            }
+            board[row][col] = "" + perimeter;
+            generateNumber(row, col + 1);
+        }*/
+    }
+
 }
 
