@@ -5,6 +5,11 @@ public class Board {
     int bombs;
     int planted;
 
+    public int getBombs()
+    {
+        return bombs;
+    }
+
     public String[][] getBoard()
     {
         return board;
