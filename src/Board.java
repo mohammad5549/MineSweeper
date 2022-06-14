@@ -1,7 +1,7 @@
 public class Board {
 
     String[][] board;
-    String level;
+    //String level;
     int bombs;
     int planted;
 
